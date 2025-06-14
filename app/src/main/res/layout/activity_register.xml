@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.RegisterActivity">
@@ -13,10 +14,10 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:title="" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="">
 
         <ImageView
             android:layout_width="100dp"
@@ -32,95 +33,91 @@
         android:id="@+id/username_label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wpisz swój nick"
-        app:layout_constraintTop_toBottomOf="@id/toolbar3"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Wpisz swój nick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar3" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nick_register"
-        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:hint="Nick"
-        app:layout_constraintTop_toBottomOf="@id/username_label2"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_label2" />
 
     <TextView
         android:id="@+id/password_label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wpisz hasło"
-        app:layout_constraintTop_toBottomOf="@id/nick_register"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Wpisz hasło"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nick_register" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password2"
-        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:hint="Hasło"
-        app:layout_constraintTop_toBottomOf="@id/password_label2"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_label2" />
 
     <TextView
         android:id="@+id/password_label3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Potwierdź hasło"
-        app:layout_constraintTop_toBottomOf="@id/password2"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Potwierdź hasło"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password2" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password3"
-        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:hint="Potwierdź hasło"
-        app:layout_constraintTop_toBottomOf="@id/password_label3"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_label3" />
 
     <TextView
         android:id="@+id/balance_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Podaj początkowy balans"
-        app:layout_constraintTop_toBottomOf="@id/password3"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Podaj początkowy balans"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password3" />
 
     <EditText
         android:id="@+id/balance"
-        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:hint="Balans"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@id/balance_label"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/balance_label" />
 
     <Button
         android:id="@+id/register2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Utwórz konto"
-        app:layout_constraintTop_toBottomOf="@id/balance"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/balance" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String PREFS_NAME = "auth";
+    private static final String TOKEN_KEY = "token";
     TextView balanceTextView;
     TextView euroTextView;
 
@@ -44,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        SharedPreferences prefs = MyApp.getContext().getSharedPreferences("auth", MODE_PRIVATE);
-        String token = prefs.getString("token", null);
+        SharedPreferences prefs = MyApp.getContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String token = prefs.getString(TOKEN_KEY, null);
 
         ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
         Call<ResponseBody> call = apiService.getBalance("Bearer " + token);
