@@ -3,98 +3,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
 
-    <TextView
-        android:id="@+id/password_label2"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Wpisz hasło"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="172dp" />
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="" >
 
-    <TextView
-        android:id="@+id/password_label3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/potwierd_has_o"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="261dp" />
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Logo"
+            android:src="@drawable/zeni_vault_logo" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/username_label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wpisz swój nick"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="78dp" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="ZeniValut" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="146dp">
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nick_register"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="nick"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="108dp" />
+        android:hint="Nick"
+        app:layout_constraintTop_toBottomOf="@id/username_label2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp" />
+
+    <TextView
+        android:id="@+id/password_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wpisz hasło"
+        app:layout_constraintTop_toBottomOf="@id/nick_register"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="hasło"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="204dp" />
+        android:hint="Hasło"
+        app:layout_constraintTop_toBottomOf="@id/password_label2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp" />
+
+    <TextView
+        android:id="@+id/password_label3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Potwierdź hasło"
+        app:layout_constraintTop_toBottomOf="@id/password2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password3"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/has_o"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:layout_editor_absoluteY="294dp" />
-
-    <EditText
-        android:id="@+id/balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="392dp" />
+        android:hint="Potwierdź hasło"
+        app:layout_constraintTop_toBottomOf="@id/password_label3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp" />
 
     <TextView
         android:id="@+id/balance_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/podaj_pocz_tkowy_balans"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="356dp" />
+        android:text="Podaj początkowy balans"
+        app:layout_constraintTop_toBottomOf="@id/password3"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"/>
+
+    <EditText
+        android:id="@+id/balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Balans"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/balance_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp" />
 
     <Button
         android:id="@+id/register2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/utw_rz_konto"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="462dp" />
+        android:text="Utwórz konto"
+        app:layout_constraintTop_toBottomOf="@id/balance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

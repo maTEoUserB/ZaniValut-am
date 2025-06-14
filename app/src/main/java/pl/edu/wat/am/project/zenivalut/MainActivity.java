@@ -3,7 +3,6 @@ package pl.edu.wat.am.project.zenivalut;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,8 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
-import pl.edu.wat.am.project.zenivalut.repository.ApiInstance;
-import pl.edu.wat.am.project.zenivalut.repository.ApiService;
+import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
+import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

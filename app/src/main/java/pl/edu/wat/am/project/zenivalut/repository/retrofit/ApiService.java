@@ -1,4 +1,4 @@
-package pl.edu.wat.am.project.zenivalut.repository;
+package pl.edu.wat.am.project.zenivalut.repository.retrofit;
 
 import okhttp3.ResponseBody;
 import pl.edu.wat.am.project.zenivalut.model.LoginData;
