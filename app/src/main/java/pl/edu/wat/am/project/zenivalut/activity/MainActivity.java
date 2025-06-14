@@ -1,6 +1,7 @@
-package pl.edu.wat.am.project.zenivalut;
+package pl.edu.wat.am.project.zenivalut.activity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import pl.edu.wat.am.project.zenivalut.MyApp;
+import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiService;
 import retrofit2.Call;
@@ -41,21 +44,24 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdFeGFtcGxlVXNlciIsImlhdCI6MTc0OTkwNTkyNSwiZXhwIjoxNzQ5OTA5NTI1fQ.GbJNgpSmyXXgxzj0TZmCjuk6aYulupIs9z0DtaezbMM";
+        SharedPreferences prefs = MyApp.getContext().getSharedPreferences("auth", MODE_PRIVATE);
+        String token = prefs.getString("token", null);
+
         ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
-        Call<ResponseBody> call = apiService.getBalance(token);
+        Call<ResponseBody> call = apiService.getBalance("Bearer " + token);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String responseString = "";
                 if (response.body() != null) {
-                    try {
-                        responseString = response.body().string();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    balanceTextView.setText("SALDO: " + responseString + " PLN");
+                    new Thread(() -> {
+                        try {
+                            String responseString = response.body().string();
+                            runOnUiThread(() -> balanceTextView.setText("SALDO: " + responseString + " PLN"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
                 }
             }
 
