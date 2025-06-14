@@ -1,7 +1,6 @@
-package pl.edu.wat.am.project.zenivalut;
+package pl.edu.wat.am.project.zenivalut.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 
 import okhttp3.ResponseBody;
+import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.model.LoginData;
 import pl.edu.wat.am.project.zenivalut.repository.AuthRepository;
 import retrofit2.Call;
@@ -53,8 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
             LoginData loginData = new LoginData(login, passwd);
 
-            AuthRepository authRepo = new AuthRepository(this);
-            authRepo.loginUser(loginData, new Callback<ResponseBody>() {
+            AuthRepository.getInstance().loginUser(loginData, new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".activity.RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
@@ -40,6 +40,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nick_register"
+        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Nick"
@@ -60,6 +61,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password2"
+        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Hasło"
@@ -80,6 +82,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/password3"
+        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Potwierdź hasło"
@@ -100,6 +103,7 @@
 
     <EditText
         android:id="@+id/balance"
+        android:minHeight="48dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Balans"

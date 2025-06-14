@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.model.LoginData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiService;
@@ -19,10 +20,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthRepository {
-    private final Context context;
+    private static AuthRepository instance;
 
-    public AuthRepository(Context context) {
-        this.context = context;
+    private AuthRepository(){}
+
+    public static AuthRepository getInstance(){
+        if(instance == null){
+            instance = new AuthRepository();
+            return instance;
+        }
+        return instance;
     }
     public void loginUser(LoginData loginData, Callback<ResponseBody> callback){
         ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
@@ -32,17 +39,32 @@ public class AuthRepository {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    try {
-                        String token = response.body().string();
-                        SharedPreferences prefs = context.getSharedPreferences("auth", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("token", token);
-                        editor.apply();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    new Thread(() -> {
+                        try {
+                            String token = response.body().string();
+                            SharedPreferences prefs = MyApp.getContext().getSharedPreferences("auth", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("token", token);
+                            editor.apply();
+
+                            // Po zapisaniu tokena, wywołaj callback na głównym wątku
+                            runOnMainThread(() -> callback.onResponse(call, response));
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            runOnMainThread(() -> callback.onFailure(call, e));
+                        }
+                    }).start();
+                } else {
+                    // Jeśli odpowiedź nie jest OK, wywołaj callback bezpośrednio
+                    callback.onResponse(call, response);
                 }
-                callback.onResponse(call, response);
+            }
+
+            // Pomocnicza metoda do wywołania kodu na głównym wątku
+            private void runOnMainThread(Runnable runnable) {
+                android.os.Handler handler = new android.os.Handler(android.os.Looper.getMainLooper());
+                handler.post(runnable);
             }
 
             @Override
