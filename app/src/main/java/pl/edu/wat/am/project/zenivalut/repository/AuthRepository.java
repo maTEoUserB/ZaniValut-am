@@ -11,7 +11,9 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import pl.edu.wat.am.project.zenivalut.MainActivity;
 import pl.edu.wat.am.project.zenivalut.model.LoginData;
+import pl.edu.wat.am.project.zenivalut.model.RegisterData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiService;
 import retrofit2.Call;
@@ -32,6 +34,34 @@ public class AuthRepository {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful() && response.body() != null){
+                    try {
+                        String token = response.body().string();
+                        SharedPreferences prefs = context.getSharedPreferences("auth", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("token", token);
+                        editor.apply();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                callback.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void registerUser(RegisterData registerData, Callback<ResponseBody> callback) {
+        ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
+        Call<ResponseBody> call = apiService.registerUser(registerData);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     try {
                         String token = response.body().string();
                         SharedPreferences prefs = context.getSharedPreferences("auth", MODE_PRIVATE);
