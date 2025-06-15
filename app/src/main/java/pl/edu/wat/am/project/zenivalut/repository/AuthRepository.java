@@ -14,7 +14,7 @@ import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.model.LoginData;
 import pl.edu.wat.am.project.zenivalut.model.RegisterData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
-import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiService;
+import pl.edu.wat.am.project.zenivalut.repository.retrofit.AuthApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +37,7 @@ public class AuthRepository {
     }
 
     public void loginUser(LoginData loginData, Callback<ResponseBody> callback) {
-        ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
+        AuthApi apiService = ApiInstance.getInstance().create(AuthApi.class);
         Call<ResponseBody> call = apiService.loginUser(loginData);
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -70,7 +70,7 @@ public class AuthRepository {
     }
 
     public void registerUser(RegisterData registerData, Callback<ResponseBody> callback) {
-        ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
+        AuthApi apiService = ApiInstance.getInstance().create(AuthApi.class);
         Call<ResponseBody> call = apiService.registerUser(registerData);
 
         call.enqueue(new Callback<ResponseBody>() {

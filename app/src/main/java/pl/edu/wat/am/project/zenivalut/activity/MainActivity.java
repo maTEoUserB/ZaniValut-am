@@ -10,16 +10,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.R;
+import pl.edu.wat.am.project.zenivalut.model.BalanceData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
-import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiService;
+import pl.edu.wat.am.project.zenivalut.repository.retrofit.AuthApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import android.content.Intent;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         balanceTextView = findViewById(R.id.balanceTextView);
+        euroTextView = findViewById(R.id.euroTextView);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.item3) {
+                Intent intent = new Intent(MainActivity.this, AddTransactionActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            // Możesz obsłużyć pozostałe itemy tutaj
+            return false;
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,26 +66,22 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = MyApp.getContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String token = prefs.getString(TOKEN_KEY, null);
 
-        ApiService apiService = ApiInstance.getInstance().create(ApiService.class);
-        Call<ResponseBody> call = apiService.getBalance("Bearer " + token);
+        AuthApi apiService = ApiInstance.getInstance().create(AuthApi.class);
+        Call<BalanceData> call = apiService.getBalance("Bearer " + token);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<BalanceData>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<BalanceData> call, Response<BalanceData> response) {
                 if (response.body() != null) {
-                    new Thread(() -> {
-                        try {
-                            String responseString = response.body().string();
-                            runOnUiThread(() -> balanceTextView.setText("SALDO: " + responseString + " PLN"));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
+                        String balance = response.body().getBalance().toString();
+                        String euroBalance = response.body().getEuroBalance().toString();
+                        runOnUiThread(() -> balanceTextView.setText("SALDO: " + balance + " PLN"));
+                        runOnUiThread(() -> euroTextView.setText("-> " + euroBalance + " EU"));
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<BalanceData> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
