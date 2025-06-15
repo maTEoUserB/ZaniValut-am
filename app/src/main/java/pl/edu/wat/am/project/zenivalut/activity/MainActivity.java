@@ -9,12 +9,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.model.BalanceData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.AuthApi;
+import pl.edu.wat.am.project.zenivalut.viewModel.BalanceViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
+    private BalanceViewModel balanceViewModel;
     TextView balanceTextView;
     TextView euroTextView;
 
@@ -44,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         balanceTextView = findViewById(R.id.balanceTextView);
         euroTextView = findViewById(R.id.euroTextView);
 
+        balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
+        balanceViewModel.getBalance().observe(this, newBalance -> {
+            balanceTextView.setText("Saldo: " + newBalance.getBalance() + " PLN");
+            euroTextView.setText("-> " + newBalance.getEuroBalance() + " EU");
+        });
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -55,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
-            // Możesz obsłużyć pozostałe itemy tutaj
             return false;
         });
 
@@ -85,5 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        balanceViewModel.loadBalance();
     }
 }
