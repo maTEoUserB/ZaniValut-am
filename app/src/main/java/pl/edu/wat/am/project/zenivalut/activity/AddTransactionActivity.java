@@ -41,7 +41,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     private Button dateButton, submitButton;
 
     private Map<String, Long> categoryMap = new HashMap<>();
-    private String isoDateTimeString = null; // Final date string in ISO 8601
+    private String isoDateTimeString = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,9 +52,8 @@ public class AddTransactionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_transaction); // <-- Upewnij się, że masz taki layout!
+        setContentView(R.layout.activity_add_transaction);
 
-        // Inicjalizacja pól
         titleEditText = findViewById(R.id.titleEditText);
         amountEditText = findViewById(R.id.amountEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
@@ -65,7 +64,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         setupDatePicker();
         setupTypeSpinner();
-        setupCategorySpinner(); // załaduj kategorie i przypisz do mapy
+        setupCategorySpinner();
 
         submitButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString().trim();
@@ -149,8 +148,6 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void setupCategorySpinner() {
-        // TODO: Pobierz kategorie z API i zapełnij spinner + categoryMap
-
         List<String> dummyCategoryNames = new ArrayList<>();
         dummyCategoryNames.add("Rachunki/opłaty");
         dummyCategoryNames.add("Żywność");
@@ -161,7 +158,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         dummyCategoryNames.add("Rozrywka");
         dummyCategoryNames.add("Inne");
 
-        // Tymczasowe ID, tylko jako przykład
         categoryMap.put("Rachunki/opłaty", 8L);
         categoryMap.put("Żywność", 9L);
         categoryMap.put("Transport", 10L);
