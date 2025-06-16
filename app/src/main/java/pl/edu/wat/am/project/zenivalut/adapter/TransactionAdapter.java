@@ -28,14 +28,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, amount, type;
+        TextView title, amount, description;
         Button deleteButton;
 
         public ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.titleText);
             amount = view.findViewById(R.id.amountText);
-            type = view.findViewById(R.id.typeText);
+            description = view.findViewById(R.id.descriptionText);
             deleteButton = view.findViewById(R.id.deleteButton);
         }
     }
@@ -52,7 +52,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         TransactionsListData tx = transactions.get(position);
         holder.title.setText(tx.getTransactionTitle());
         holder.amount.setText(String.valueOf(tx.getAmount()));
-        holder.type.setText(tx.getType());
+        holder.description.setText(tx.getTransactionDescription());
 
         holder.deleteButton.setOnClickListener(v -> onDeleteClick.onDelete(tx.getId()));
     }
