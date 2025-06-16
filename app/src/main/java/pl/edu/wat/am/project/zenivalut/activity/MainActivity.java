@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.model.BalanceData;
+import pl.edu.wat.am.project.zenivalut.repository.retrofit.AccountApi;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.AuthApi;
 import pl.edu.wat.am.project.zenivalut.viewModel.BalanceViewModel;
@@ -71,28 +72,28 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        SharedPreferences prefs = MyApp.getContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String token = prefs.getString(TOKEN_KEY, null);
-
-        AuthApi apiService = ApiInstance.getInstance().create(AuthApi.class);
-        Call<BalanceData> call = apiService.getBalance("Bearer " + token);
-
-        call.enqueue(new Callback<BalanceData>() {
-            @Override
-            public void onResponse(Call<BalanceData> call, Response<BalanceData> response) {
-                if (response.body() != null) {
-                        String balance = response.body().getBalance().toString();
-                        String euroBalance = response.body().getEuroBalance().toString();
-                        runOnUiThread(() -> balanceTextView.setText("SALDO: " + balance + " PLN"));
-                        runOnUiThread(() -> euroTextView.setText("-> " + euroBalance + " EU"));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BalanceData> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        SharedPreferences prefs = MyApp.getContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+//        String token = prefs.getString(TOKEN_KEY, null);
+//
+//        AccountApi apiService = ApiInstance.getInstance().create(AccountApi.class);
+//        Call<BalanceData> call = apiService.getBalance("Bearer " + token);
+//
+//        call.enqueue(new Callback<BalanceData>() {
+//            @Override
+//            public void onResponse(Call<BalanceData> call, Response<BalanceData> response) {
+//                if (response.body() != null) {
+//                        String balance = response.body().getBalance().toString();
+//                        String euroBalance = response.body().getEuroBalance().toString();
+//                        runOnUiThread(() -> balanceTextView.setText("SALDO: " + balance + " PLN"));
+//                        runOnUiThread(() -> euroTextView.setText("-> " + euroBalance + " EU"));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<BalanceData> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override

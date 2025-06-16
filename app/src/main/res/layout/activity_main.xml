@@ -105,7 +105,7 @@
                             android:background="#80000000"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:padding="16dp">  <!-- półprzezroczyste czarne tło dla lepszej czytelności -->
+                            android:padding="16dp">
 
                             <ImageView
                                 android:layout_width="24dp"
