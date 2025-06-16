@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
-            if (itemId == R.id.item3) {
+            if (itemId == R.id.item2) {
                 Intent intent = new Intent(MainActivity.this, AddTransactionActivity.class);
                 startActivity(intent);
                 return true;
@@ -69,29 +69,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, TransactionListActivity.class);
             startActivity(intent);
         });
-
-//        SharedPreferences prefs = MyApp.getContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-//        String token = prefs.getString(TOKEN_KEY, null);
-//
-//        AccountApi apiService = ApiInstance.getInstance().create(AccountApi.class);
-//        Call<BalanceData> call = apiService.getBalance("Bearer " + token);
-//
-//        call.enqueue(new Callback<BalanceData>() {
-//            @Override
-//            public void onResponse(Call<BalanceData> call, Response<BalanceData> response) {
-//                if (response.body() != null) {
-//                        String balance = response.body().getBalance().toString();
-//                        String euroBalance = response.body().getEuroBalance().toString();
-//                        runOnUiThread(() -> balanceTextView.setText("SALDO: " + balance + " PLN"));
-//                        runOnUiThread(() -> euroTextView.setText("-> " + euroBalance + " EU"));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BalanceData> call, Throwable t) {
-//                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @Override
