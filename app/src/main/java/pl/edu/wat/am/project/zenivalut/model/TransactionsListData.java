@@ -2,7 +2,7 @@ package pl.edu.wat.am.project.zenivalut.model;
 
 import java.sql.Timestamp;
 
-public class LastTransactionsDTO {
+public class TransactionsListData {
     private long id;
     private String transactionTitle;
     private String transactionDescription;

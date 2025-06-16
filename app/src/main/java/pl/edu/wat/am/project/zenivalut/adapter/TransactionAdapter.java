@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import pl.edu.wat.am.project.zenivalut.R;
-import pl.edu.wat.am.project.zenivalut.model.LastTransactionsDTO;
+import pl.edu.wat.am.project.zenivalut.model.TransactionsListData;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
 
@@ -19,10 +19,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         void onDelete(long id);
     }
 
-    private final List<LastTransactionsDTO> transactions;
+    private final List<TransactionsListData> transactions;
     private final OnDeleteClick onDeleteClick;
 
-    public TransactionAdapter(List<LastTransactionsDTO> transactions, OnDeleteClick onDeleteClick) {
+    public TransactionAdapter(List<TransactionsListData> transactions, OnDeleteClick onDeleteClick) {
         this.transactions = transactions;
         this.onDeleteClick = onDeleteClick;
     }
@@ -49,7 +49,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        LastTransactionsDTO tx = transactions.get(position);
+        TransactionsListData tx = transactions.get(position);
         holder.title.setText(tx.getTransactionTitle());
         holder.amount.setText(String.valueOf(tx.getAmount()));
         holder.type.setText(tx.getType());

@@ -13,7 +13,7 @@ import java.util.List;
 
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.adapter.TransactionAdapter;
-import pl.edu.wat.am.project.zenivalut.model.LastTransactionsDTO;
+import pl.edu.wat.am.project.zenivalut.model.TransactionsListData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.TransactionApi;
 import retrofit2.Call;
@@ -24,7 +24,7 @@ public class TransactionListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TransactionAdapter adapter;
-    private List<LastTransactionsDTO> transactions = new ArrayList<>();
+    private List<TransactionsListData> transactions = new ArrayList<>();
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
 
@@ -48,9 +48,9 @@ public class TransactionListActivity extends AppCompatActivity {
         if (token == null) return;
 
         TransactionApi api = ApiInstance.getInstance().create(TransactionApi.class);
-        api.getTransactions("Bearer " + token).enqueue(new Callback<List<LastTransactionsDTO>>() {
+        api.getTransactions("Bearer " + token).enqueue(new Callback<List<TransactionsListData>>() {
             @Override
-            public void onResponse(Call<List<LastTransactionsDTO>> call, Response<List<LastTransactionsDTO>> response) {
+            public void onResponse(Call<List<TransactionsListData>> call, Response<List<TransactionsListData>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     transactions.clear();
                     transactions.addAll(response.body());
@@ -59,15 +59,34 @@ public class TransactionListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<LastTransactionsDTO>> call, Throwable t) {
+            public void onFailure(Call<List<TransactionsListData>> call, Throwable t) {
                 Toast.makeText(TransactionListActivity.this, "Błąd połączenia", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void deleteTransaction(long id) {
-        // Dodaj endpoint DELETE w backendzie (np. /transactions/{id})
-        Toast.makeText(this, "Usunięcie transakcji ID: " + id, Toast.LENGTH_SHORT).show();
-        // Wywołaj backend i po sukcesie odśwież listę
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String token = prefs.getString(TOKEN_KEY, null);
+
+        if (token == null) return;
+
+        TransactionApi api = ApiInstance.getInstance().create(TransactionApi.class);
+        api.deleteTransaction("Bearer " + token, id).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(TransactionListActivity.this, "Transakcja usunięta.", Toast.LENGTH_SHORT).show();
+                    loadTransactions();
+                } else {
+                    Toast.makeText(TransactionListActivity.this, "Błąd usuwania: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(TransactionListActivity.this, "Nie udało się usunąć transakcji.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
