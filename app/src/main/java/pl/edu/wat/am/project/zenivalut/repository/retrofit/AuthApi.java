@@ -16,7 +16,4 @@ public interface AuthApi {
 
     @POST("/api/auth/signin")
     Call<ResponseBody> loginUser(@Body LoginData loginData);
-
-    @GET("/balance")
-    Call<BalanceData> getBalance(@Header("Authorization") String token);
 }

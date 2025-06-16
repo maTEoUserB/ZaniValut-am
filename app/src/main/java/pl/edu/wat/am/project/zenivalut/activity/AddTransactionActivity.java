@@ -74,7 +74,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             String selectedCategory = categorySpinner.getSelectedItem().toString();
 
             if (title.isEmpty() || amountStr.isEmpty() || type.isEmpty() || isoDateTimeString == null || !categoryMap.containsKey(selectedCategory)) {
-                Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Wypełnij wymagane pola.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -82,7 +82,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             try {
                 amount = Double.parseDouble(amountStr);
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Amount must be a number", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Kwota musi być liczbą (00.0)", Toast.LENGTH_SHORT).show();
                 return;
             }
 

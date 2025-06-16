@@ -1,54 +1,67 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <EditText
-            android:id="@+id/titleEditText"
-            android:hint="Title"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#F9F9F9"
+            android:maxWidth="500dp"
+            android:minWidth="300dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/amountEditText"
-            android:hint="Amount"
-            android:inputType="numberDecimal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/titleEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/descriptionEditText"
-            android:hint="Description (optional)"
-            android:inputType="textMultiLine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/amountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount"
+                android:inputType="numberDecimal" />
 
-        <Spinner
-            android:id="@+id/categorySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description (optional)"
+                android:inputType="textMultiLine" />
 
-        <Spinner
-            android:id="@+id/typeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/categorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/dateButton"
-            android:text="Pick Date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/typeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/submitButton"
-            android:text="Add Transaction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/dateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pick Date" />
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Transaction" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

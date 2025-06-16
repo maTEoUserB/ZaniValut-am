@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.model.BalanceData;
+import pl.edu.wat.am.project.zenivalut.repository.retrofit.AccountApi;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.AuthApi;
 import retrofit2.Call;
@@ -30,7 +31,7 @@ public class BalanceViewModel extends ViewModel {
         SharedPreferences prefs = MyApp.getContext().getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String token = prefs.getString(TOKEN_KEY, null);
 
-        AuthApi apiService = ApiInstance.getInstance().create(AuthApi.class);
+        AccountApi apiService = ApiInstance.getInstance().create(AccountApi.class);
         Call<BalanceData> call = apiService.getBalance("Bearer " + token);
 
         call.enqueue(new Callback<BalanceData>() {
