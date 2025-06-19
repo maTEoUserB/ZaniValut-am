@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,7 +15,7 @@ import pl.edu.wat.am.project.zenivalut.viewModel.BalanceViewModel;
 import android.content.Intent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
@@ -36,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupToolbar();
+
         balanceTextView = findViewById(R.id.balanceTextView);
         euroTextView = findViewById(R.id.euroTextView);
 
         balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
         balanceViewModel.getBalance().observe(this, newBalance -> {
-            balanceTextView.setText("Saldo: " + newBalance.getBalance() + " PLN");
+            balanceTextView.setText(getString(R.string.balance_text) + " " + newBalance.getBalance() + " PLN");
             euroTextView.setText("-> " + newBalance.getEuroBalance() + " EU");
         });
 
@@ -58,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //Obsługa kliknięcia na karty
         CardView card3 = findViewById(R.id.card3);

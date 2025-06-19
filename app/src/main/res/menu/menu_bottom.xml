@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/item1"
-        android:title="Termin"
+        android:title="@string/term_add_text"
         android:icon="@drawable/baseline_access_time_filled_24" />
 
     <item
         android:id="@+id/item2"
-        android:title="Transakcja"
+        android:title="@string/transaction_add_text"
         android:icon="@drawable/baseline_add_card_24" />
 
     <item
         android:id="@+id/item3"
-        android:title="Cel"
+        android:title="@string/goal_add_text"
         android:icon="@drawable/baseline_add_shopping_cart_24" />
 
 </menu>

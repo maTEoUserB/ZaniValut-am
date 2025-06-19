@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddTransactionActivity extends AppCompatActivity {
+public class AddTransactionActivity extends BaseActivity {
 
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
@@ -53,6 +53,8 @@ public class AddTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
+
+        setupToolbar();
 
         titleEditText = findViewById(R.id.titleEditText);
         amountEditText = findViewById(R.id.amountEditText);

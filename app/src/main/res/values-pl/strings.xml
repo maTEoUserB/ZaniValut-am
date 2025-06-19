@@ -1,0 +1,38 @@
+<resources>
+
+    <string name="app_name">ZeniValut</string>
+    <string name="open_nav">Otwórz navigacje</string>
+    <string name="close_nav">Zamknij navigacje</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Cześć</string>
+    <string name="nick">nazwa użytkownika</string>
+    <string name="wpisz_sw_j_nick">Wpisz swoją nazwę użytkownika</string>
+    <string name="wpisz_has_o">Wpisz hasło</string>
+    <string name="krzes_o_has_o">hasło</string>
+    <string name="nie_masz_konta">Nie masz konta?</string>
+    <string name="zaloguj">Zaloguj</string>
+    <string name="potwierd_has_o">Potwierdź hasło</string>
+    <string name="has_o">hasło</string>
+    <string name="balance">balans</string>
+    <string name="podaj_pocz_tkowy_balans">Podaj początkowe saldo</string>
+    <string name="utw_rz_konto">Utwórz konto</string>
+    <string name="zarejestruj_sie">Zarejestruj się</string>
+    <string name="title">Tytuł</string>
+    <string name="amount">Kwota</string>
+    <string name="description">Opis (opcjonalnie)</string>
+    <string name="pick_date">Wybierz datę</string>
+    <string name="add_transaction">Dodaj transakcję</string>
+    <string name="main_balance">Saldo: 0.0 PLN</string>
+    <string name="eu_balance">-> 0.0 EU></string>
+    <string name="your_savings">Sprawdź swoje oszczędności</string>
+    <string name="deadlines">Terminy płatności</string>
+    <string name="transactions_texts">Transakcje</string>
+    <string name="categories_expenses">Wydatki według kategorii</string>
+    <string name="delete_text">Usuń</string>
+    <string name="term_add_text">Termin</string>
+    <string name="transaction_add_text" >Transakcja</string>
+    <string name="goal_add_text" >Cel</string>
+    <string name="balance_text" >Saldo:</string>
+
+
+</resources>

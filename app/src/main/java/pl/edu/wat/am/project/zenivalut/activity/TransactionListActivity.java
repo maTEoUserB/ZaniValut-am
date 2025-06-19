@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TransactionListActivity extends AppCompatActivity {
+public class TransactionListActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private TransactionAdapter adapter;
@@ -32,6 +32,8 @@ public class TransactionListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_list);
+
+        setupToolbar();
 
         recyclerView = findViewById(R.id.transactionRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
