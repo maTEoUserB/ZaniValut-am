@@ -24,21 +24,21 @@
                 android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Title"
+                android:hint="@string/title"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/amountEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Amount"
+                android:hint="@string/amount"
                 android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/descriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description (optional)"
+                android:hint="@string/description"
                 android:inputType="textMultiLine" />
 
             <Spinner
@@ -55,13 +55,13 @@
                 android:id="@+id/dateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pick Date" />
+                android:text="@string/pick_date" />
 
             <Button
                 android:id="@+id/submitButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Transaction" />
+                android:text="@string/add_transaction" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

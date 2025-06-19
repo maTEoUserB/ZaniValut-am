@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:hint="@string/krzes_o_has_o"
+        android:inputType="textPassword"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"

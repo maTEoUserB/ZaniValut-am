@@ -35,7 +35,7 @@
 
     <Button
         android:id="@+id/deleteButton"
-        android:text="Usuń"
+        android:text="@string/delete_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/descriptionText"

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
         balanceViewModel.getBalance().observe(this, newBalance -> {
-            balanceTextView.setText("Saldo: " + newBalance.getBalance() + " PLN");
+            balanceTextView.setText(getString(R.string.balance_text) + " " + newBalance.getBalance() + " PLN");
             euroTextView.setText("-> " + newBalance.getEuroBalance() + " EU");
         });
 
