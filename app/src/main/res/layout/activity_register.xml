@@ -7,27 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.RegisterActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:layout_gravity="start"
-            android:layout_marginStart="16dp"
-            android:contentDescription="Logo"
-            android:src="@drawable/zeni_vault_logo" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/username_label2"
@@ -37,7 +22,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/wpisz_sw_j_nick"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar3" />
+        app:layout_constraintTop_toBottomOf="@id/include_toolbar" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/nick_register"
