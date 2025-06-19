@@ -214,56 +214,11 @@
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- Czwarta karta -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card4"
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChart"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="12dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="6dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="Tło karty"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/categories" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#80000000"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:contentDescription="Ikona"
-                                android:src="@drawable/baseline_category_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:text="@string/categories_expenses"
-                                android:textColor="@android:color/white"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
+                    android:layout_height="300dp"
+                    android:layout_margin="16dp" />
 
             </LinearLayout>
         </ScrollView>
