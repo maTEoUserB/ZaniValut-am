@@ -2,6 +2,7 @@ package pl.edu.wat.am.project.zenivalut.repository.retrofit;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import pl.edu.wat.am.project.zenivalut.model.CreateTransactionData;
 import pl.edu.wat.am.project.zenivalut.model.TransactionsListData;
 import pl.edu.wat.am.project.zenivalut.model.TransactionData;
@@ -11,7 +12,9 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface TransactionApi {
@@ -24,4 +27,11 @@ public interface TransactionApi {
 
     @DELETE("/transaction/delete/{id}")
     Call<Void> deleteTransaction(@Header("Authorization") String token, @Path("id") long id);
+
+    @Multipart
+    @POST("/transaction/from-receipt")
+    Call<TransactionData> uploadReceipt(
+            @Header("Authorization") String token,
+            @Part MultipartBody.Part file
+    );
 }

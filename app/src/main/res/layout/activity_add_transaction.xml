@@ -75,6 +75,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_transaction" />
+
+                <Button
+                    android:id="@+id/scanReceiptButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scan_receipt" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

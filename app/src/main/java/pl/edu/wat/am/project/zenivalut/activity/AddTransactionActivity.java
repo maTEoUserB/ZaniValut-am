@@ -1,26 +1,46 @@
 package pl.edu.wat.am.project.zenivalut.activity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.model.CreateTransactionData;
@@ -35,10 +55,13 @@ public class AddTransactionActivity extends BaseActivity {
 
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Uri photoUri;
+    private ActivityResultLauncher<Intent> takePictureLauncher;
 
     private EditText titleEditText, amountEditText, descriptionEditText;
     private Spinner categorySpinner, typeSpinner;
-    private Button dateButton, submitButton;
+    private Button dateButton, submitButton, scanReceiptButton;
 
     private Map<String, Long> categoryMap = new HashMap<>();
     private String isoDateTimeString = null;
@@ -49,6 +72,7 @@ public class AddTransactionActivity extends BaseActivity {
         return true;
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +87,28 @@ public class AddTransactionActivity extends BaseActivity {
         typeSpinner = findViewById(R.id.typeSpinner);
         dateButton = findViewById(R.id.dateButton);
         submitButton = findViewById(R.id.submitButton);
+        scanReceiptButton = findViewById(R.id.scanReceiptButton);
 
         setupDatePicker();
         setupTypeSpinner();
         setupCategorySpinner();
+
+        //Uprawnienia do kamery
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 100);
+        }
+
+        takePictureLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && photoUri != null) {
+                        sendImageToBackend(photoUri);
+                    }
+                });
 
         submitButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString().trim();
@@ -122,6 +164,119 @@ public class AddTransactionActivity extends BaseActivity {
                 }
             });
         });
+
+        //Skan paragonu
+        scanReceiptButton.setOnClickListener(v -> {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Log.d("CAMERA_CHECK", "Checking if camera activity is available...");
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    Toast.makeText(this, "Nie udało się utworzyć pliku zdjęcia", Toast.LENGTH_SHORT).show();
+                }
+
+                if (photoFile != null) {
+                    Log.d("PHOTO_FILE", "Photo file path: " + photoFile.getAbsolutePath());
+                    photoUri = FileProvider.getUriForFile(this, "pl.edu.wat.am.project.zenivalut.provider", photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    takePictureLauncher.launch(takePictureIntent);
+                }else{
+                    Log.e("PHOTO_FILE", "Photo file is null!");
+                }
+            }else{
+                Log.e("CAMERA_CHECK", "No camera app found!");
+                Toast.makeText(this, "Brak aplikacji aparatu!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("ACTIVITY_RESULT", "RequestCode: " + requestCode + " ResultCode: " + resultCode);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            if (photoUri != null) {
+                Log.d("ACTIVITY_RESULT", "Photo URI: " + photoUri.toString());
+                sendImageToBackend(photoUri);
+            }else{
+                Log.e("ACTIVITY_RESULT", "photoUri is null");
+            }
+        }else{
+            Log.e("ACTIVITY_RESULT", "Unexpected result or canceled");
+        }
+    }
+
+    private void sendImageToBackend(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            if (inputStream == null) {
+                Toast.makeText(this, "Błąd odczytu obrazu", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Przenieś dane do pliku tymczasowego (bo Retrofit wymaga pliku)
+            File tempFile = File.createTempFile("upload_", ".jpg", getCacheDir());
+            OutputStream outputStream = new FileOutputStream(tempFile);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            inputStream.close();
+            outputStream.close();
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), tempFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", tempFile.getName(), requestFile);
+
+            SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+            String token = prefs.getString(TOKEN_KEY, null);
+
+            if (token == null) {
+                Toast.makeText(this, "Brak autoryzacji", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            TransactionApi api = ApiInstance.getInstance().create(TransactionApi.class);
+            Call<TransactionData> call = api.uploadReceipt("Bearer " + token, body);
+
+            call.enqueue(new Callback<TransactionData>() {
+                @Override
+                public void onResponse(Call<TransactionData> call, Response<TransactionData> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Toast.makeText(AddTransactionActivity.this, "Paragon przesłany. Transakcja dodana.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(AddTransactionActivity.this, "Błąd przy przetwarzaniu paragonu.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TransactionData> call, Throwable t) {
+                    Toast.makeText(AddTransactionActivity.this, "Błąd połączenia: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } catch (IOException e) {
+            Toast.makeText(this, "Błąd: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
     private void setupDatePicker() {

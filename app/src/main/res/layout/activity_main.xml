@@ -63,7 +63,7 @@
                 <!--                 Pierwsza karta -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card1"
-                    android:layout_width="372dp"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -115,7 +115,7 @@
                 <!--                 Druga karta -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card2"
-                    android:layout_width="372dp"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -166,7 +166,7 @@
                 <!-- Trzecia karta -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card3"
-                    android:layout_width="372dp"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -217,7 +217,7 @@
                 <!-- Czwarta karta -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card4"
-                    android:layout_width="372dp"
+                    android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
