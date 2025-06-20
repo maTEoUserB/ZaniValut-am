@@ -66,5 +66,14 @@
     <string name="other" >Inne</string>
     <string name="income" >przychód</string>
     <string name="expense" >wydatek</string>
+    <string name="currnetAmount">Zaoszczędzona kwota</string>
+    <string name="finalAmount">Docelowa kwota</string>
+    <string name="add_savings">Dodaj cel oszczędnosciowy</string>
+    <string name="savings_added">Dodano cel oszczędnościowy</string>
+    <string name="update_text">Aktualizuj</string>
+    <string name="current_amount">Odłożona kwota: </string>
+    <string name="final_amount">Finalna kwota: </string>
+    <string name="deadline">Termin: </string>
+    <string name="obligation_amount">Kwota do zapłaty: </string>
 
 </resources>

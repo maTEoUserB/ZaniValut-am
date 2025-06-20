@@ -28,6 +28,10 @@
         <activity android:name=".activity.AddTransactionActivity" />
         <activity android:name=".activity.TransactionListActivity" />
         <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.SavingsListActivity" />
+        <activity android:name=".activity.AddSavingsActivity" />
+        <activity android:name=".activity.ObligationListActivity" />
+        <activity android:name=".activity.AddObligationActivity" />
 
         <activity
             android:name=".activity.LoginActivity"

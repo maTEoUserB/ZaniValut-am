@@ -347,6 +347,15 @@ public class AddTransactionActivity extends BaseActivity {
         categoryMap.put("Rozrywka", 14L);
         categoryMap.put("Inne", 15L);
 
+        categoryMap.put("Bills", 8L);
+        categoryMap.put("Food", 9L);
+        categoryMap.put("Transport", 10L);
+        categoryMap.put("Health", 11L);
+        categoryMap.put("Education", 12L);
+        categoryMap.put("Family", 13L);
+        categoryMap.put("Entertaiment", 14L);
+        categoryMap.put("Other", 15L);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dummyCategoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);

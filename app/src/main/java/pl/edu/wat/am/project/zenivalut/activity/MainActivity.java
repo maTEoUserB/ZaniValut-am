@@ -117,8 +117,20 @@ public class MainActivity extends BaseActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
+            if (itemId == R.id.item1) {
+                Intent intent = new Intent(MainActivity.this, AddObligationActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
             if (itemId == R.id.item2) {
                 Intent intent = new Intent(MainActivity.this, AddTransactionActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            if (itemId == R.id.item3) {
+                Intent intent = new Intent(MainActivity.this, AddSavingsActivity.class);
                 startActivity(intent);
                 return true;
             }
@@ -129,6 +141,18 @@ public class MainActivity extends BaseActivity {
         CardView card3 = findViewById(R.id.card3);
         card3.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, TransactionListActivity.class);
+            startActivity(intent);
+        });
+
+        CardView card2 = findViewById(R.id.card2);
+        card2.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ObligationListActivity.class);
+            startActivity(intent);
+        });
+
+        CardView card1 = findViewById(R.id.card1);
+        card1.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SavingsListActivity.class);
             startActivity(intent);
         });
 

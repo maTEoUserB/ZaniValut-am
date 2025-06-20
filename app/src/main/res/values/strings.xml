@@ -66,5 +66,14 @@
     <string name="other" >Other</string>
     <string name="income" >income</string>
     <string name="expense" >expense</string>
+    <string name="currnetAmount">Current amount</string>
+    <string name="finalAmount">Final amount</string>
+    <string name="add_savings">Add savings goal</string>
+    <string name="savings_added">Added savings goal</string>
+    <string name="update_text">Update</string>
+    <string name="current_amount">Current amount: </string>
+    <string name="final_amount">Final amount: </string>
+    <string name="deadline">Deadline: </string>
+    <string name="obligation_amount">Amount to pay: </string>
 
 </resources>

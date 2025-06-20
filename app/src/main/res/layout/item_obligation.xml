@@ -16,10 +16,10 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/currentAmountText" />
+        app:layout_constraintEnd_toStartOf="@+id/obligationAmountText" />
 
     <TextView
-        android:id="@+id/currentAmountText"
+        android:id="@+id/dateToPayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"
@@ -27,21 +27,12 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/finalAmountText"
+        android:id="@+id/obligationAmountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@+id/currentAmountText"
+        app:layout_constraintTop_toBottomOf="@+id/dateToPayText"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/deadlineText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@+id/finalAmountText"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/updateButton"
@@ -49,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@+id/deadlineText"
+        app:layout_constraintTop_toBottomOf="@+id/obligationAmountText"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
