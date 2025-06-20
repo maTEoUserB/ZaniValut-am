@@ -16,10 +16,10 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/amountText" />
+        app:layout_constraintEnd_toStartOf="@+id/currentAmountText" />
 
     <TextView
-        android:id="@+id/amountText"
+        android:id="@+id/currentAmountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"
@@ -27,21 +27,29 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/descriptionText"
+        android:id="@+id/finalAmountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@+id/titleText"
+        app:layout_constraintTop_toBottomOf="@+id/currentAmountText"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/deadlineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorOnSurface"
+        app:layout_constraintTop_toBottomOf="@+id/finalAmountText"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp" />
 
     <Button
-        android:id="@+id/deleteButton"
-        android:text="@string/delete_text"
+        android:id="@+id/updateButton"
+        android:text="@string/update_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@+id/deadlineText"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,23 +44,11 @@
                     android:id="@+id/amountEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/amount"
+                    android:hint="@string/currnetAmount"
                     android:inputType="numberDecimal" />
-
-                <EditText
-                    android:id="@+id/descriptionEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/description"
-                    android:inputType="textMultiLine" />
 
                 <Spinner
                     android:id="@+id/categorySpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Spinner
-                    android:id="@+id/typeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -74,13 +62,8 @@
                     android:id="@+id/submitButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_transaction" />
+                    android:text="@string/add_savings" />
 
-                <Button
-                    android:id="@+id/scanReceiptButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/scan_receipt" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

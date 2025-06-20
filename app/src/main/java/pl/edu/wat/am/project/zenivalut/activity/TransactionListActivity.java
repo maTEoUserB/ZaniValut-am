@@ -1,10 +1,14 @@
 package pl.edu.wat.am.project.zenivalut.activity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,12 +32,40 @@ public class TransactionListActivity extends BaseActivity {
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
 
+    SwitchCompat themeSwitch;
+    boolean nightMode;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_list);
 
         setupToolbar();
+
+        themeSwitch = findViewById(R.id.themeSwitch);
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        nightMode = sharedPreferences.getBoolean("nightMode", false);
+        if(nightMode){
+            themeSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        themeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(nightMode){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("nightMode", false);
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("nightMode", true);
+                }
+                editor.apply();
+            }
+        });
 
         recyclerView = findViewById(R.id.transactionRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +94,7 @@ public class TransactionListActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<List<TransactionsListData>> call, Throwable t) {
-                Toast.makeText(TransactionListActivity.this, "Błąd połączenia", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TransactionListActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -78,16 +110,16 @@ public class TransactionListActivity extends BaseActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(TransactionListActivity.this, "Transakcja usunięta.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionListActivity.this, getString(R.string.transaction_deleted), Toast.LENGTH_SHORT).show();
                     loadTransactions();
                 } else {
-                    Toast.makeText(TransactionListActivity.this, "Błąd usuwania: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionListActivity.this, getString(R.string.deleting_error) + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(TransactionListActivity.this, "Nie udało się usunąć transakcji.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TransactionListActivity.this, getString(R.string.transaction_delete_failed), Toast.LENGTH_SHORT).show();
             }
         });
     }

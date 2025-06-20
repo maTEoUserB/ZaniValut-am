@@ -13,7 +13,6 @@ import pl.edu.wat.am.project.zenivalut.MyApp;
 import pl.edu.wat.am.project.zenivalut.model.BalanceData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.AccountApi;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
-import pl.edu.wat.am.project.zenivalut.repository.retrofit.AuthApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
