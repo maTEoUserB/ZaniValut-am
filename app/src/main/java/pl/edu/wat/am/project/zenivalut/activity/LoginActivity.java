@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +34,7 @@ public class LoginActivity extends BaseActivity {
     TextInputEditText password;
     Button loginButton;
     Button registerButton;
+    FrameLayout loadingContainer;
 
     SwitchCompat themeSwitch;
     boolean nightMode;
@@ -74,16 +77,34 @@ public class LoginActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        loadingContainer = findViewById(R.id.loading_container);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
         registerButton = findViewById(R.id.register_button);
 
-
         loginButton.setOnClickListener(v -> {
 
             String login = username.getText().toString().trim();
             String passwd = password.getText().toString().trim();
+
+            if (login.isEmpty()) {
+                Toast.makeText(LoginActivity.this, getString(R.string.nick_required), Toast.LENGTH_SHORT).show();
+                username.requestFocus();
+                return;
+            }
+
+            if (passwd.isEmpty()) {
+                Toast.makeText(LoginActivity.this, getString(R.string.password_required), Toast.LENGTH_SHORT).show();
+                password.requestFocus();
+                return;
+            }
+
+            loadingContainer.setVisibility(View.VISIBLE);
+            username.setEnabled(false);
+            password.setEnabled(false);
+            loginButton.setEnabled(false);
+            registerButton.setEnabled(false);
 
             LoginData loginData = new LoginData(login, passwd);
 
@@ -92,6 +113,7 @@ public class LoginActivity extends BaseActivity {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        loadingContainer.setVisibility(View.GONE);
                         startActivity(intent);
                         finish();
                     } else {
@@ -101,6 +123,7 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    loadingContainer.setVisibility(View.GONE);
                     Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                     System.out.println(t.getMessage());
                 }

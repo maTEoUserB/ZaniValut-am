@@ -75,5 +75,19 @@
     <string name="final_amount">Final amount: </string>
     <string name="deadline">Deadline: </string>
     <string name="obligation_amount">Amount to pay: </string>
+    <string name="nick_required">Enter nickname</string>
+    <string name="password_required">Enter password</string>
+    <string name="password_validation">Password must be at least 6 characters long</string>
+    <string name="pick_deadline">Set deadline</string>
+    <string name="add_obligation">Add obligation</string>
+    <string name="obligation_added">Obligation added</string>
+    <string name="update_savings">Update amount of savings goal</string>
+    <string name="amount_not_blank">Amount cannot be blank</string>
+    <string name="token_error">There is no token</string>
+    <string name="wrong_amount">Wrong amount</string>
+    <string name="updated_savings">Savings goal updated</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="updated_obligation">Obligation updated</string>
+
 
 </resources>

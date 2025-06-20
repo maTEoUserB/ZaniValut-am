@@ -115,16 +115,16 @@ public class ObligationListActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<ObligationData> call, Response<ObligationData> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(getApplicationContext(), "Oszczędność zaktualizowana!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.updated_obligation, Toast.LENGTH_SHORT).show();
                         loadObligations();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Błąd aktualizacji: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.error + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ObligationData> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Błąd połączenia: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.connection_error + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
     }
