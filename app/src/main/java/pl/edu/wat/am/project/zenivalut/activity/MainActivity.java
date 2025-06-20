@@ -1,12 +1,16 @@
 package pl.edu.wat.am.project.zenivalut.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -47,6 +51,11 @@ public class MainActivity extends BaseActivity {
     private static final String PREFS_NAME = "auth";
     private static final String TOKEN_KEY = "token";
 
+    SwitchCompat themeSwitch;
+    boolean nightMode;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -58,8 +67,30 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setupToolbar();
+
+        themeSwitch = findViewById(R.id.themeSwitch);
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        nightMode = sharedPreferences.getBoolean("nightMode", false);
+        if(nightMode){
+            themeSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        themeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(nightMode){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("nightMode", false);
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("nightMode", true);
+                }
+                editor.apply();
+            }
+        });
 
         balanceTextView = findViewById(R.id.balanceTextView);
         euroTextView = findViewById(R.id.euroTextView);
@@ -103,6 +134,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -137,20 +169,32 @@ public class MainActivity extends BaseActivity {
             entries.add(new Entry(i, item.getTotalAmount().floatValue()));
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, "Wydatki");
-        dataSet.setColor(Color.BLUE);
-        dataSet.setValueTextColor(Color.BLACK);
+        int textColor = getResources().getColor(R.color.chart_text_color, getTheme());
+        int lineColor = getResources().getColor(R.color.chart_line_color, getTheme());
+        int backgroundColor = getResources().getColor(R.color.chart_background, getTheme());
+
+        LineDataSet dataSet = new LineDataSet(entries, getString(R.string.expenses));
+        dataSet.setColor(lineColor);
+        dataSet.setCircleColor(lineColor);
+        dataSet.setValueTextColor(textColor);
 
         LineData lineData = new LineData(dataSet);
         lineChart.setData(lineData);
-        lineChart.getDescription().setText("Wydatki tygodniowe");
 
-        final String[] labelsArray = labels.toArray(new String[0]);
-        lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labelsArray));
-        lineChart.getXAxis().setGranularity(1f);
-        lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        lineChart.getXAxis().setDrawGridLines(false);
+        lineChart.getDescription().setText(getString(R.string.weekly_expenses));
+        lineChart.getDescription().setTextColor(textColor);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setGranularity(1f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(textColor);
+
+        lineChart.getAxisLeft().setTextColor(textColor);
         lineChart.getAxisRight().setEnabled(false);
+
+        lineChart.setBackgroundColor(backgroundColor);
 
         lineChart.invalidate();
     }

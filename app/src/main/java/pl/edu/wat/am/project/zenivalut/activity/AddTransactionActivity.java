@@ -3,6 +3,7 @@ package pl.edu.wat.am.project.zenivalut.activity;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -10,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -66,6 +67,11 @@ public class AddTransactionActivity extends BaseActivity {
     private Map<String, Long> categoryMap = new HashMap<>();
     private String isoDateTimeString = null;
 
+    SwitchCompat themeSwitch;
+    boolean nightMode;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -79,6 +85,29 @@ public class AddTransactionActivity extends BaseActivity {
         setContentView(R.layout.activity_add_transaction);
 
         setupToolbar();
+
+        themeSwitch = findViewById(R.id.themeSwitch);
+        sharedPreferences = getSharedPreferences("MODE", Context.MODE_PRIVATE);
+        nightMode = sharedPreferences.getBoolean("nightMode", false);
+        if(nightMode){
+            themeSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        themeSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(nightMode){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("nightMode", false);
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor = sharedPreferences.edit();
+                    editor.putBoolean("nightMode", true);
+                }
+                editor.apply();
+            }
+        });
 
         titleEditText = findViewById(R.id.titleEditText);
         amountEditText = findViewById(R.id.amountEditText);
@@ -115,10 +144,18 @@ public class AddTransactionActivity extends BaseActivity {
             String amountStr = amountEditText.getText().toString().trim();
             String description = descriptionEditText.getText().toString().trim();
             String type = typeSpinner.getSelectedItem().toString();
+
+            if(type.equals("income") || type.equals("przychód")){
+                type = "income";
+            }
+            if(type.equals("expense") || type.equals("wydatek")){
+                type = "expense";
+            }
+
             String selectedCategory = categorySpinner.getSelectedItem().toString();
 
             if (title.isEmpty() || amountStr.isEmpty() || type.isEmpty() || isoDateTimeString == null || !categoryMap.containsKey(selectedCategory)) {
-                Toast.makeText(this, "Wypełnij wymagane pola.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.required_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -126,7 +163,7 @@ public class AddTransactionActivity extends BaseActivity {
             try {
                 amount = Double.parseDouble(amountStr);
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Kwota musi być liczbą (00.0)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.amount_must), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -140,7 +177,7 @@ public class AddTransactionActivity extends BaseActivity {
             String token = prefs.getString(TOKEN_KEY, null);
 
             if (token == null) {
-                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.not_authenticated), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -151,16 +188,16 @@ public class AddTransactionActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<TransactionData> call, Response<TransactionData> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(AddTransactionActivity.this, "Transaction added!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransactionActivity.this, getString(R.string.transactoin_added), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(AddTransactionActivity.this, "Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransactionActivity.this, getString(R.string.error) + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TransactionData> call, Throwable t) {
-                    Toast.makeText(AddTransactionActivity.this, "Failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTransactionActivity.this, getString(R.string.faild) + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -168,26 +205,19 @@ public class AddTransactionActivity extends BaseActivity {
         //Skan paragonu
         scanReceiptButton.setOnClickListener(v -> {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Log.d("CAMERA_CHECK", "Checking if camera activity is available...");
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                 File photoFile = null;
                 try {
                     photoFile = createImageFile();
                 } catch (IOException ex) {
-                    Toast.makeText(this, "Nie udało się utworzyć pliku zdjęcia", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.create_photo_faild), Toast.LENGTH_SHORT).show();
                 }
 
                 if (photoFile != null) {
-                    Log.d("PHOTO_FILE", "Photo file path: " + photoFile.getAbsolutePath());
                     photoUri = FileProvider.getUriForFile(this, "pl.edu.wat.am.project.zenivalut.provider", photoFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                     takePictureLauncher.launch(takePictureIntent);
-                }else{
-                    Log.e("PHOTO_FILE", "Photo file is null!");
                 }
-            }else{
-                Log.e("CAMERA_CHECK", "No camera app found!");
-                Toast.makeText(this, "Brak aplikacji aparatu!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -200,17 +230,11 @@ public class AddTransactionActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("ACTIVITY_RESULT", "RequestCode: " + requestCode + " ResultCode: " + resultCode);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             if (photoUri != null) {
-                Log.d("ACTIVITY_RESULT", "Photo URI: " + photoUri.toString());
                 sendImageToBackend(photoUri);
-            }else{
-                Log.e("ACTIVITY_RESULT", "photoUri is null");
             }
-        }else{
-            Log.e("ACTIVITY_RESULT", "Unexpected result or canceled");
         }
     }
 
@@ -218,11 +242,10 @@ public class AddTransactionActivity extends BaseActivity {
         try {
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
             if (inputStream == null) {
-                Toast.makeText(this, "Błąd odczytu obrazu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.get_photo_faild), Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Przenieś dane do pliku tymczasowego (bo Retrofit wymaga pliku)
             File tempFile = File.createTempFile("upload_", ".jpg", getCacheDir());
             OutputStream outputStream = new FileOutputStream(tempFile);
             byte[] buffer = new byte[4096];
@@ -242,7 +265,7 @@ public class AddTransactionActivity extends BaseActivity {
             String token = prefs.getString(TOKEN_KEY, null);
 
             if (token == null) {
-                Toast.makeText(this, "Brak autoryzacji", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.not_authorization), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -253,21 +276,21 @@ public class AddTransactionActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<TransactionData> call, Response<TransactionData> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(AddTransactionActivity.this, "Paragon przesłany. Transakcja dodana.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransactionActivity.this, getString(R.string.receipt_sent), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(AddTransactionActivity.this, "Błąd przy przetwarzaniu paragonu.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddTransactionActivity.this, getString(R.string.receipt_error), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<TransactionData> call, Throwable t) {
-                    Toast.makeText(AddTransactionActivity.this, "Błąd połączenia: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTransactionActivity.this, getString(R.string.connection_error) + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
 
         } catch (IOException e) {
-            Toast.makeText(this, "Błąd: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error) + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -296,8 +319,8 @@ public class AddTransactionActivity extends BaseActivity {
 
     private void setupTypeSpinner() {
         List<String> types = new ArrayList<>();
-        types.add("income");
-        types.add("expense");
+        types.add(getString(R.string.income));
+        types.add(getString(R.string.expense));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -306,14 +329,14 @@ public class AddTransactionActivity extends BaseActivity {
 
     private void setupCategorySpinner() {
         List<String> dummyCategoryNames = new ArrayList<>();
-        dummyCategoryNames.add("Rachunki/opłaty");
-        dummyCategoryNames.add("Żywność");
-        dummyCategoryNames.add("Transport");
-        dummyCategoryNames.add("Zdrowie/higiena");
-        dummyCategoryNames.add("Edukacja");
-        dummyCategoryNames.add("Rodzina");
-        dummyCategoryNames.add("Rozrywka");
-        dummyCategoryNames.add("Inne");
+        dummyCategoryNames.add(getString(R.string.bills));
+        dummyCategoryNames.add(getString(R.string.food));
+        dummyCategoryNames.add(getString(R.string.transport));
+        dummyCategoryNames.add(getString(R.string.health));
+        dummyCategoryNames.add(getString(R.string.education));
+        dummyCategoryNames.add(getString(R.string.family));
+        dummyCategoryNames.add(getString(R.string.entertaiment));
+        dummyCategoryNames.add(getString(R.string.other));
 
         categoryMap.put("Rachunki/opłaty", 8L);
         categoryMap.put("Żywność", 9L);

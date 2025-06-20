@@ -17,4 +17,12 @@
     <color name="colorOnError">#000000</color>
 
     <color name="colorBottomBarBackground">#121212</color>
+
+    <color name="chart_text_color">#FFFFFF</color>
+    <color name="chart_line_color">#6200EE</color>
+    <color name="chart_background">#121212</color>
+
+
+    <color name="overlayDark">#80FFFFFF</color>
+
 </resources>
