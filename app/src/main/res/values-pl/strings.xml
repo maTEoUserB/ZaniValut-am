@@ -88,6 +88,7 @@
     <string name="updated_savings">Cel oszczędnościowy zaaktualizowany</string>
     <string name="text_cancel">Anuluj</string>
     <string name="updated_obligation">Zaaktualizowano termin płatności</string>
-
+    <string name="logout">Wyloguj się</string>
+    <string name="paid">Opłacono</string>
 
 </resources>

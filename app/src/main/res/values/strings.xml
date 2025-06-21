@@ -88,6 +88,8 @@
     <string name="updated_savings">Savings goal updated</string>
     <string name="text_cancel">Cancel</string>
     <string name="updated_obligation">Obligation updated</string>
+    <string name="logout">Logout</string>
+    <string name="paid">Paid</string>
 
 
 </resources>

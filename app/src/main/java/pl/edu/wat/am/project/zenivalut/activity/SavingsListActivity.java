@@ -108,10 +108,10 @@ public class SavingsListActivity extends BaseActivity {
 
         final android.widget.EditText input = new android.widget.EditText(this);
         input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        input.setHint(R.string.current_amount + " " + saving.getCurrentAmount());
+        input.setHint(getString(R.string.current_amount) + " " + saving.getCurrentAmount());
         builder.setView(input);
 
-        builder.setPositiveButton(R.string.update_text + " ", (dialog, which) -> {
+        builder.setPositiveButton(getString(R.string.update_text) + " ", (dialog, which) -> {
             String inputValue = input.getText().toString();
             if(inputValue.isEmpty()){
                 Toast.makeText(this, R.string.amount_not_blank, Toast.LENGTH_SHORT).show();

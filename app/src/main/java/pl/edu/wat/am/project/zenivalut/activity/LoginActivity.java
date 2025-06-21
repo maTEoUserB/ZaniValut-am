@@ -117,6 +117,11 @@ public class LoginActivity extends BaseActivity {
                         startActivity(intent);
                         finish();
                     } else {
+                        loadingContainer.setVisibility(View.GONE);
+                        username.setEnabled(true);
+                        password.setEnabled(true);
+                        loginButton.setEnabled(true);
+                        registerButton.setEnabled(true);
                         Toast.makeText(LoginActivity.this, getString(R.string.login_error), Toast.LENGTH_SHORT).show();
                     }
                 }

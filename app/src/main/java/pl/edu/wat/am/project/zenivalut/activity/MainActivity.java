@@ -3,10 +3,12 @@ package pl.edu.wat.am.project.zenivalut.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -22,6 +24,7 @@ import pl.edu.wat.am.project.zenivalut.viewModel.ExpensesViewModel;
 
 
 import android.content.Intent;
+import androidx.appcompat.widget.Toolbar;
 
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
@@ -46,6 +49,7 @@ public class MainActivity extends BaseActivity {
     TextView balanceTextView;
     TextView euroTextView;
     LineChart lineChart;
+    ImageButton logoutButton;
     private ExpensesViewModel expensesViewModel;
 
     private static final String PREFS_NAME = "auth";
@@ -95,6 +99,22 @@ public class MainActivity extends BaseActivity {
         balanceTextView = findViewById(R.id.balanceTextView);
         euroTextView = findViewById(R.id.euroTextView);
         lineChart = findViewById(R.id.lineChart);
+        logoutButton = findViewById(R.id.logoutButton);
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.apply();
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         balanceViewModel = new ViewModelProvider(this).get(BalanceViewModel.class);
         balanceViewModel.getBalance().observe(this, newBalance -> {

@@ -12,20 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.adapter.ObligationAdapter;
-import pl.edu.wat.am.project.zenivalut.adapter.SavingsAdapter;
 import pl.edu.wat.am.project.zenivalut.model.ObligationData;
 import pl.edu.wat.am.project.zenivalut.model.ObligationsListData;
-import pl.edu.wat.am.project.zenivalut.model.SavingsData;
-import pl.edu.wat.am.project.zenivalut.model.SavingsListData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ObligationApi;
-import pl.edu.wat.am.project.zenivalut.repository.retrofit.SavingsApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -309,9 +309,10 @@ public class AddTransactionActivity extends BaseActivity {
             new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
                 new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
                     calendar.set(year, month, dayOfMonth, hourOfDay, minute);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-                    isoDateTimeString = sdf.format(calendar.getTime());
-                    dateButton.setText(isoDateTimeString);
+                    SimpleDateFormat sdfBackend = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                    SimpleDateFormat sdfDisplay = new SimpleDateFormat("dd MMMM yyyy, HH:mm", Locale.getDefault());
+                    isoDateTimeString = sdfBackend.format(calendar.getTime());
+                    dateButton.setText(sdfDisplay.format(calendar.getTime()));
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
