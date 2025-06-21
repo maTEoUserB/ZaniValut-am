@@ -36,7 +36,7 @@
 
     <Button
         android:id="@+id/updateButton"
-        android:text="@string/update_text"
+        android:text="@string/paid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorOnSurface"

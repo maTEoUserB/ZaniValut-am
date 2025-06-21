@@ -18,13 +18,10 @@ import java.util.Map;
 
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.adapter.SavingsAdapter;
-import pl.edu.wat.am.project.zenivalut.adapter.TransactionAdapter;
 import pl.edu.wat.am.project.zenivalut.model.SavingsData;
 import pl.edu.wat.am.project.zenivalut.model.SavingsListData;
-import pl.edu.wat.am.project.zenivalut.model.TransactionsListData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.SavingsApi;
-import pl.edu.wat.am.project.zenivalut.repository.retrofit.TransactionApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,24 +104,24 @@ public class SavingsListActivity extends BaseActivity {
 
     private void updateSaving(SavingsListData saving) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-        builder.setTitle("Aktualizuj kwotę oszczędności");
+        builder.setTitle(getString(R.string.update_savings));
 
         final android.widget.EditText input = new android.widget.EditText(this);
         input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        input.setHint("Obecna kwota: " + saving.getCurrentAmount());
+        input.setHint(getString(R.string.current_amount) + " " + saving.getCurrentAmount());
         builder.setView(input);
 
-        builder.setPositiveButton("Aktualizuj", (dialog, which) -> {
+        builder.setPositiveButton(getString(R.string.update_text) + " ", (dialog, which) -> {
             String inputValue = input.getText().toString();
             if(inputValue.isEmpty()){
-                Toast.makeText(this, "Kwota nie może być pusta", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.amount_not_blank, Toast.LENGTH_SHORT).show();
                 return;
             }
             Double newAmount;
             try {
                 newAmount = Double.parseDouble(inputValue);
             } catch (NumberFormatException e){
-                Toast.makeText(this, "Nieprawidłowa kwota", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.wrong_amount, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -134,7 +131,7 @@ public class SavingsListActivity extends BaseActivity {
             SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
             String token = prefs.getString("token", null);
             if (token == null) {
-                Toast.makeText(this, "Brak tokena!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.token_error, Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -145,21 +142,21 @@ public class SavingsListActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<SavingsData> call, Response<SavingsData> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(getApplicationContext(), "Oszczędność zaktualizowana!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.updated_savings, Toast.LENGTH_SHORT).show();
                         loadSavings();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Błąd aktualizacji: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.error + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<SavingsData> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Błąd połączenia: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.connection_error + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         });
 
-        builder.setNegativeButton("Anuluj", (dialog, which) -> dialog.cancel());
+        builder.setNegativeButton(R.string.text_cancel, (dialog, which) -> dialog.cancel());
 
         builder.show();
     }

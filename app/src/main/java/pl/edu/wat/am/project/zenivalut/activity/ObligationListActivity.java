@@ -12,20 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import pl.edu.wat.am.project.zenivalut.R;
 import pl.edu.wat.am.project.zenivalut.adapter.ObligationAdapter;
-import pl.edu.wat.am.project.zenivalut.adapter.SavingsAdapter;
 import pl.edu.wat.am.project.zenivalut.model.ObligationData;
 import pl.edu.wat.am.project.zenivalut.model.ObligationsListData;
-import pl.edu.wat.am.project.zenivalut.model.SavingsData;
-import pl.edu.wat.am.project.zenivalut.model.SavingsListData;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ApiInstance;
 import pl.edu.wat.am.project.zenivalut.repository.retrofit.ObligationApi;
-import pl.edu.wat.am.project.zenivalut.repository.retrofit.SavingsApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -115,16 +109,16 @@ public class ObligationListActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<ObligationData> call, Response<ObligationData> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(getApplicationContext(), "Oszczędność zaktualizowana!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.updated_obligation, Toast.LENGTH_SHORT).show();
                         loadObligations();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Błąd aktualizacji: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.error + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ObligationData> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Błąd połączenia: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.connection_error + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
     }

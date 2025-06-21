@@ -44,7 +44,7 @@
                     android:id="@+id/amountEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/currnetAmount"
+                    android:hint="@string/amount"
                     android:inputType="numberDecimal" />
 
                 <Spinner
@@ -56,13 +56,13 @@
                     android:id="@+id/dateButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/pick_date" />
+                    android:text="@string/pick_deadline" />
 
                 <Button
                     android:id="@+id/submitButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_savings" />
+                    android:text="@string/add_obligation" />
 
             </LinearLayout>
         </LinearLayout>

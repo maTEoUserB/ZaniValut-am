@@ -75,5 +75,20 @@
     <string name="final_amount">Finalna kwota: </string>
     <string name="deadline">Termin: </string>
     <string name="obligation_amount">Kwota do zapłaty: </string>
+    <string name="nick_required">Podaj nazwę użytkownika</string>
+    <string name="password_required">Podaj hasło</string>
+    <string name="password_validation">Hasło musi składac się z przynajmniej 6 znaków</string>
+    <string name="pick_deadline">Ustaw datę</string>
+    <string name="add_obligation">Dodaj termin płatności</string>
+    <string name="obligation_added">Dodano termin płatności</string>
+    <string name="update_savings">Aktualizuj kwote celu oszczędnościowego</string>
+    <string name="amount_not_blank">Kwota nie może być pusta</string>
+    <string name="token_error">Brak tokena</string>
+    <string name="wrong_amount">Nieprawidłowa kwota</string>
+    <string name="updated_savings">Cel oszczędnościowy zaaktualizowany</string>
+    <string name="text_cancel">Anuluj</string>
+    <string name="updated_obligation">Zaaktualizowano termin płatności</string>
+    <string name="logout">Wyloguj się</string>
+    <string name="paid">Opłacono</string>
 
 </resources>

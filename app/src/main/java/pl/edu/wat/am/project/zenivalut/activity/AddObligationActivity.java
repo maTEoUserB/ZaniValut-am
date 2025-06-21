@@ -132,7 +132,7 @@ public class AddObligationActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<ObligationData> call, Response<ObligationData> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(AddObligationActivity.this, getString(R.string.savings_added), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddObligationActivity.this, getString(R.string.obligation_added), Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
                         Toast.makeText(AddObligationActivity.this, getString(R.string.error) + response.code(), Toast.LENGTH_SHORT).show();

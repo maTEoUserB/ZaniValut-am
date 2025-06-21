@@ -2,14 +2,9 @@ package pl.edu.wat.am.project.zenivalut.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import pl.edu.wat.am.project.zenivalut.R;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
 
 public class BaseActivity extends AppCompatActivity {
     @Override
